@@ -1,0 +1,2508 @@
+<html> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="stylesheet" href="style.css"> 
+  <title>Music Player</title> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> 
+  <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet"> 
+  <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script> 
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
+
+body {
+    overflow:hidden;
+    margin:0;
+    background:   #FA8072;
+    color:    #FFFAFA;
+    padding:0;
+    
+}
+h2{
+    margin-top:100px;
+}
+
+.logo{
+    width: 300px;
+    margin-right:-10px;
+    margin-top: 10px;
+  
+}
+
+#loading-1{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    top: 0;
+    left: 0;   
+    background-color: #000000;  
+    background-size: cover;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+#loading-2{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    /* z-index: 100; */
+    top: -7%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+*{
+    -webkit-box-sizing:border-box;
+            box-sizing:border-box;
+    padding:0;
+    margin:0;
+    font-family:poppins;
+}
+
+.hide{
+    display:none;
+}
+.music__player__page__one{
+    
+    background:   #FA8072;
+    width:100%;
+    height:180vh;
+    background-attachment:fixed;
+    background-size:100vw 180vh;
+    background-position:top center;
+    background-repeat:no-repeat;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+   /* justify-content:center;*/
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    z-index:0;
+}
+
+.bottom_navigation_bar{
+    background:#fff;
+    height:10vh;
+    
+    z-index:1;
+    width:100%;
+    position:fixed;
+    top:93vh;
+    border-radius:50px 50px 0 0;
+    -webkit-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    padding:2em;
+    display:none;
+   -webkit-box-pack:center;
+       -ms-flex-pack:center;
+           justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    color:#000;
+    
+}
+
+nav ul{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+        justify-content: space-around ;
+    
+        
+}
+
+nav li{
+    list-style-type: none;
+    margin:0 9vw;
+   font-size: 4.8vw;
+}
+
+
+..heading_first_page{
+    background:#fff;
+    height:6vh;
+    width:100%;
+    position:fixed;
+    top:0%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#000;
+    font-family:cursive;
+}
+
+
+.featured__song__div{
+    background:#000;
+    height:30vh;
+    width:100%;
+    min-height:300px;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    /*justify-content:center;*/
+    /*align-items:center;*/
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    background-size:cover;
+    color:#fff;
+    background-position:top center;
+    background-repeat:no-repeat; 
+    
+    -webkit-clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 0);
+            clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 90%);
+}
+
+#featured_img{
+    height:100%;
+    width:100%;
+}
+
+.recently__played__song__div{
+   /* background:#000;*/
+    height:80vmin;
+    width:100%;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-pack:center;
+        -ms-flex-pack:center;
+            justify-content:center;
+    /*align-items:center;*/
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    color:#000;
+    padding:0.9em;
+    margin:5em;
+    min-height:300px;
+    
+}
+
+.music__player__page__one > .recently__played__song__div {
+        margin:2vmin;
+}
+
+.recently__played__song__div > .recently__played__song__head{
+    margin-left:20px;
+}
+
+
+.recently__played__song__div > .recently__played__slider{
+    margin:4vmin;
+}
+
+.recently__played__slider{
+
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y:hidden;
+}
+
+.recently__played__slider::-webkit-scrollbar{
+    display: none;
+}
+
+/*.horizantal_slider{
+    -ms-overflow-style: none;
+}*/
+
+.recently__played__container_slider_1{
+    display: block;
+    white-space: nowrap;
+    vertical-align:top;
+}
+
+.recently_played_item{
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    width: 65vmin;
+    height: 57vmin;
+    vertical-align:top;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius:20px;
+    -webkit-box-pack:center;
+        -ms-flex-pack:center;
+            justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    background-image: -o-linear-gradient(330deg, #a1c4fd 0%, #c2e9fb 100%);
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    
+}
+
+.recently__played__song__div > 
+recently__played__song__head {
+    display:inline-block;
+    border-bottom:3px solid #ffda45;
+    
+}
+
+
+
+
+
+
+
+
+
+
+.you_may_like__song__div{
+   /* background:#576f57;*/
+    height:80vmin;
+    width:100%;
+    min-height:300px;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    /*justify-content:center;*/
+    /*align-items:center;*/
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    color:#000;
+    padding:0.9em;
+    margin:0.5em;
+}
+
+
+.you_may_like__song__div > .you_may_like__slider{
+    margin:4vmin;
+}
+.you_may_like__slider{
+
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.you_may_like__slider::-webkit-scrollbar{
+    display: block;
+}
+
+/*.horizantal_slider{
+    -ms-overflow-style: none;
+}*/
+
+.you_may_like_slider_1{
+    display: block;
+    white-space: nowrap;
+    vertical-align:top;
+    
+}
+
+
+
+.you_may_like_item{
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    width: 65vmin;
+    height: 57vmin;
+    background-image: -o-linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius:20px;
+    /*padding:1em;*/
+   vertical-align: top;
+   -webkit-box-pack:center;
+       -ms-flex-pack:center;
+           justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+}
+
+
+
+
+.genre__div{
+   /* background:#000;*/
+    height:80vmin;
+    width:100%;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-pack:center;
+        -ms-flex-pack:center;
+            justify-content:center;
+    /*align-items:center;*/
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    color:#000;
+    padding:0.9em;
+    margin:2em;
+    min-height:300px;
+}
+
+
+.music__player__page__one > .genre__div {
+        margin:2vmin;
+}
+
+.genre__div > .genre__head{
+    margin-left:20px;
+}
+
+
+.genre__div > .genre__slider{
+    margin:4vmin;
+}
+
+.genre__slider{
+
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y:hidden;
+}
+
+.genre__slider::-webkit-scrollbar{
+    display: none;
+}
+
+.horizantal_slider{
+    -ms-overflow-style: none;
+}
+
+.genre_slider_1{
+    display: block;
+    white-space: nowrap;
+    
+}
+
+.genre_item{
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    width: 65vmin;
+    height: 50vmin;
+    vertical-align: top;
+   -webkit-box-pack:center;
+       -ms-flex-pack:center;
+           justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius:20px;
+}
+
+
+
+
+
+.artists_first__div{
+    background:transparent;
+    height:45vh;
+    width:100%;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    /*justify-content:center;*/
+    /*align-items:center;*/
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    color:#000;
+    padding:2em;
+    margin:2em;
+    min-height:300px;
+}
+
+.music__player__page__one > .artists_first__div {
+        margin:1vmin;
+}
+
+.artists_first__div > .artist_first__slider{
+    margin:4vmin;
+}
+.artist_first__slider{
+
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.artist_first__slider::-webkit-scrollbar{
+    display: none;
+}
+
+/*.horizantal_slider{
+    -ms-overflow-style: none;
+}*/
+
+.artist_first_slider_1{
+    display: block;
+    white-space: nowrap;
+    
+}
+
+.artist_first_item{
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    width: 30vmin;
+    height: 30vmin;
+    background-image: -o-linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius:50%;
+}
+
+
+
+
+
+
+
+.trending__page{
+    background:#FA8072;
+    width:100%;
+    height:200vh;
+    background-attachment:fixed;
+    background-size:100vw 200vh;
+    background-position:top center;
+    background-repeat:no-repeat;
+    display:none;
+   /* justify-content:center;*/
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-orient:horizontal;
+    -webkit-box-direction:normal;
+        -ms-flex-flow:row;
+            flex-flow:row;
+    z-index:0;
+}
+.left__side{
+    background:#FA8072;
+    width:50%;
+    height:160vh;
+    background-attachment:fixed;
+    background-position:top center;
+    background-size:100vw 160vh;
+    background-repeat:no-repeat;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+   /* justify-content:center;*/
+   -webkit-box-align:center;
+       -ms-flex-align:center;
+           align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    
+}
+
+.left_trending_item{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    width: 95%;
+   /* height: 50vmin;*/
+    background-image: -o-linear-gradient(330deg, #a1c4fd 0%, #c2e9fb 100%);
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius:20px;
+    
+    
+}
+
+#left_trending_item_one{
+    height: 80vmin;
+    background-image: url("https://i.ibb.co/BLzbHJ0/400x400cc.jpg");
+  background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+}
+
+#left_trending_item_two{
+    height: 40vmin;
+    background-image: url("https://i.ibb.co/xLd9wJY/artworks-000577845122-nyqplm-t500x500.jpg");
+    background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+}
+
+#left_trending_item_three{
+    height: 60vmin;
+    background-image: url("https://i.ibb.co/xX35M3X/artworks-X5f-OYJJ9-H7l0-OQOE-iu-NGgw-t500x500.jpg");
+    background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+} 
+#left_trending_item_four{
+    height: 80vmin;
+    background-image: url("https://i.ibb.co/6PkHcLj/artworks-000515969529-barar5-t500x500.jpg");
+  background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+}
+
+#left_trending_item_five{
+    height: 80vmin;
+    background-image: url("https://i.ibb.co/YNkWDjB/artworks-000359430471-6jd8ty-t500x500.jpg");
+  background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+}
+.left__side > .left_trending_item {
+    margin:5px;
+}
+
+.right__side{
+    background:#FA8072;
+    width:50%;
+    height:160vh;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    background-attachment:fixed;
+    background-position:top center;
+    background-repeat:no-repeat;
+    background-size:100vw 160vh;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+   /* justify-content:center;*/
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    
+}
+
+.right_trending_item{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    width: 95%;
+    /*height: 50vmin;*/
+    background-image: url("https://i.ibb.co/sjwWTJC/MV5-BZTUy-YWI4-Y2-Et-ZGQ2-MC00-NDNi-LTg3-N2-Ut-MWMw-Y2-I1-ZTVi-Yz-A4-Xk-Ey-Xk-Fqc-Gde-QXVy-MTY5-MDE5.jpg");
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius:20px;
+}
+
+#right_trending_item_one{
+    height: 40vmin;
+    background-image: url("https://i.ibb.co/XsTRjWs/maxresdefault.jpg");
+    background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+}
+
+#right_trending_item_two{
+    height: 60vmin;
+    background-image: url("https://i.ibb.co/LCdPJnt/calum-scott-biblical-lyrics-1.jpg");
+    background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+}
+
+#right_trending_item_three{
+    height: 50vmin;
+ background-image: url("https://i.ibb.co/hW9XTn9/Screenshot-2022-0417-195614.png");
+ background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+}
+
+#right_trending_item_four{
+    height: 80vmin;
+    background-image: url("https://i.ibb.co/Jtt6BXW/artworks-5o8q9f-FYS8-PYauzl-Cy-KBJA-t500x500.jpg");
+  background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+}
+
+#right_trending_item_five{
+    height: 80vmin;
+    background-image: url("https://i.ibb.co/DMM72cg/jaymes-young-infinity-lyrics-1.jpg");
+  background-size: cover; 
+  -webkit-background-size: cover; 
+  -moz-background-size: cover; 
+  -o-background-size: cover;  
+  margin:0;
+  padding:0;
+}
+.right__side > .right_trending_item {
+    margin:10px;
+}
+
+.trending_heading{
+    position:fixed;
+    top:0;
+    padding:1em;
+    width:100%;
+    background:#FA8072;
+    height:auto;
+
+}
+
+#trend_head{
+    display:inline-block;
+
+}
+
+
+
+.profile__page{
+    background:#FA8072;
+    width:100%;
+    height:100vh;
+    background-attachment:fixed;
+    background-position:top center;
+    background-repeat:no-repeat;
+    display:none;
+   justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:0;
+    
+}
+</style> 
+  <style>
+
+
+#profile_head{ 
+    display:inline-block;
+    border-bottom:3px solid #ffda45;
+    padding:0.3em;
+}
+
+.profile__page > .profile__page__head{
+    margin:2vmax;
+}
+
+.profile__page > .profile__image{
+    margin-top:10vmin;
+}
+
+.profile__image{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+ .profile__pic{
+    width:50vmin;
+    height:50vmin;
+}
+
+.profile__pic{
+    border-radius:50%;
+}
+
+
+.profile__card > h3 {
+    margin:6vmin;
+}
+
+.profile__page > .profile__card{
+    margin-top:3vmin;
+    
+}
+
+.socials__profile{
+    display:flex;
+    font-size:1.3em;
+    
+}
+
+.profile__card > .socials__profile {
+    margin:2vmin;
+}
+
+.socials__profile > i{
+    margin-left:20px;
+}
+
+
+
+*/
+.profile__page{
+background:#FA8072;
+    width:100%;
+    height:100vh;
+    background-attachment:fixed;
+    background-size:100vw 100vh;
+    background-position:top center;
+    background-repeat:no-repeat;
+    display:none;
+
+    -webkit-box-align:center;
+
+        -ms-flex-align:center;
+
+            align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-flow:column;
+            flex-flow:column;
+    z-index:0;
+}
+
+
+.profile__image{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-pack:center;
+        -ms-flex-pack:center;
+            justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+}
+
+.profile__pic{
+    width:50vmin;
+    height:50vmin;
+ 
+}
+
+
+.pg{
+    margin:10vmin;
+}
+
+.pc{
+    margin:10vmin;
+}
+
+
+.profile__info{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-pack:center;
+        -ms-flex-pack:center;
+            justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+}
+
+.socials__profile > i{
+    margin-left:10px;
+    font-size:2rem;
+}
+
+#open_git{
+    font-size:1.5rem;
+}
+
+
+
+
+.
+
+.tabs__fav{
+    display:-webkit-inline-box;
+    display:-ms-inline-flexbox;
+    display:inline-flex;
+    -webkit-box-pack:center;
+        -ms-flex-pack:center;
+            justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+}
+
+.favourite__page > .tabs__fav{
+    margin-top:20px ;
+}
+
+.tabs__fav > span{
+    margin:25px;
+}
+
+.playlists_fav{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    width:100%;
+    height:40vh;
+    padding:1em;
+}
+
+.fav_playlist{
+    height:40vh;
+    width:100%;
+    background-image: -o-linear-gradient(330deg, #f6d365 0%, #fda085 100%);
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    padding:50px;
+     display:-webkit-box;
+     display:-ms-flexbox;
+     display:flex;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-pack:center;
+        -ms-flex-pack:center;
+            justify-content:center;
+    border-radius:25px;
+}
+
+.playlists_fav > .fav_playlist{
+    margin:10px;
+}
+
+
+.artist_fav{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    width:100%;
+    height:40vh;
+    padding:1em;
+}
+
+.fav_artist{
+    height:40vh;
+    width:100%;
+    background-image: -o-linear-gradient(330deg, #d4fc79 0%, #96e6a1 100%);
+    background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+    padding:50px;
+     display:-webkit-box;
+     display:-ms-flexbox;
+     display:flex;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-pack:center;
+        -ms-flex-pack:center;
+            justify-content:center;
+    border-radius:25px;
+}
+
+.artist_fav > .fav_artist{
+    margin:10px;
+}
+
+.tabsc{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+}
+
+
+
+
+
+.tabsc{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+}
+
+
+
+.music__page{
+    background:#FA8072;
+    width:100%;
+    height:100vh;
+    background-attachment:fixed;
+    background-size:100vw 100vh;
+    background-position:top center;
+    background-repeat:no-repeat;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+   /* justify-content:center;*/
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    z-index:0;
+}
+
+.upper__part{
+    width:100%;
+    height:73vh;
+    background:#FA8072;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+   -webkit-box-pack:center;
+       -ms-flex-pack:center;
+           justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+}
+
+.music__card{
+    width:50%;
+    height:40%;
+    background:#FA8072;
+    border-radius:25px;
+    -webkit-box-shadow:0 1vmin 1vmin #FA8072;
+            box-shadow:0 1vmin 1vmin #FA8072;
+}
+
+.music_thumbnail{
+    width:100%;
+    height:100%;
+    border-radius:15px 15px 25px 25px;
+}
+.upper__part > .credentials{
+    margin:10px;
+}
+.credentials{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+   -webkit-box-pack:center;
+       -ms-flex-pack:center;
+           justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    margin:5px;
+}
+.music_name{
+    font-size:2rem;
+}
+
+.back_from_music_page{
+    position:absolute;
+    top:15px;
+    left:20px;
+    font-size:2rem;
+}
+
+.menu_in_music_page{
+    position:absolute;
+    top:15px;
+    right:20px;
+    font-size:2rem;
+}
+
+.down_part{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+   -webkit-box-pack:center;
+       -ms-flex-pack:center;
+           justify-content:center;
+    -webkit-box-align:center;
+        -ms-flex-align:center;
+            align-items:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    margin:8px;
+}
+.play_and_all{
+    font-size:3em;
+}
+
+.down_part_icons{
+    display:-webkit-inline-box;
+    display:-ms-inline-flexbox;
+    display:inline-flex;
+    -ms-flex-pack: distribute;
+        justify-content: space-around ;
+    font-size:1.5em;
+}
+
+.down_part_icons > i{
+    margin-left:30px;
+    margin-right:30px;
+}
+
+.gaana{
+    visibility:none;
+}
+
+.image{
+    height:100%;
+    width:100%;
+    border-radius:20px;
+}
+
+.image_artist{
+    height:100%;
+    width:100%;
+    border-radius:50%;
+}
+.text{
+    font-size:2.5rem;
+    color:#fff;
+    font-family:rock salt;
+}
+
+
+@media (min-width:961px)  { 
+     
+
+
+    .music__player__page__one{
+        background:#FA8072;
+        width:100%;
+        height:200vh;
+        background-attachment:fixed;
+        background-size:100vw 200vh;
+        background-position:top center;
+        background-repeat:no-repeat;
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+       /* justify-content:center;*/
+        -webkit-box-align:center;
+            -ms-flex-align:center;
+                align-items:center;
+        -webkit-box-orient:vertical;
+        -webkit-box-direction:normal;
+            -ms-flex-direction:column;
+                flex-direction:column;
+        z-index:0;
+    }
+    
+    .bottom_navigation_bar{
+        background:#FA8072;
+        height:10vh;
+        
+        z-index:1;
+        width:100%;
+        position:fixed;
+        top:93vh;
+        border-radius:50px 50px 0 0;
+        -webkit-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        padding:1.5em;
+        display:none;
+       -webkit-box-pack:center;
+           -ms-flex-pack:center;
+               justify-content:center;
+        -webkit-box-align:center;
+            -ms-flex-align:center;
+                align-items:center;
+        color:#000;
+        
+    }
+    
+    nav ul{
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: distribute;
+            justify-content: space-around ;
+        
+            
+    }
+    
+    nav li{
+        list-style-type: none;
+        margin:0 9vw;
+       font-size: 5em;
+    }
+    
+    .featured__song__div{
+        background:#000;
+        height:30vh;
+        width:100%;
+        min-height:300px;
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+        /*justify-content:center;*/
+        /*align-items:center;*/
+        -webkit-box-orient:vertical;
+        -webkit-box-direction:normal;
+            -ms-flex-direction:column;
+                flex-direction:column;
+        background-size:cover;
+        color:#fff;
+        padding:1em;
+        background-position:top center;
+        background-attachment:fixed;
+        background-repeat:no-repeat; 
+      
+    }
+    
+    
+    
+    .recently__played__song__div{
+       /* background:#000;*/
+        height:80vmin;
+        width:100%;
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+        -webkit-box-pack:center;
+            -ms-flex-pack:center;
+                justify-content:center;
+        /*align-items:center;*/
+        -webkit-box-orient:vertical;
+        -webkit-box-direction:normal;
+            -ms-flex-direction:column;
+                flex-direction:column;
+        color:#000;
+        padding:0.9em;
+        margin:2em;
+        min-height:380px;
+    }
+    
+    .music__player__page__one > .recently__played__song__div {
+            margin:2vmin;
+    }
+    
+    .recently__played__song__div > .recently__played__song__head{
+        margin-left:20px;
+    }
+    
+    
+    .recently__played__song__div > .recently__played__slider{
+        margin:4vmin;
+    }
+    
+    .recently__played__slider{
+    
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y:hidden;
+    }
+    
+    .recently__played__slider::-webkit-scrollbar{
+        display: none;
+    }
+    
+    /*.horizantal_slider{
+        -ms-overflow-style: none;
+    }*/
+    
+    .recently__played__container_slider_1{
+        display: block;
+        white-space: nowrap;
+        vertical-align:top;
+    }
+    
+    .recently_played_item{
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        margin-left: 10px;
+        margin-right: 10px;
+    
+        width: 65vmin;
+        height: 40vmin;
+        vertical-align:top;
+        -o-object-fit: cover;
+           object-fit: cover;
+        border-radius:20px;
+        -webkit-box-pack:center;
+            -ms-flex-pack:center;
+                justify-content:center;
+        -webkit-box-align:center;
+            -ms-flex-align:center;
+                align-items:center;
+        background-image: -o-linear-gradient(330deg, #a1c4fd 0%, #c2e9fb 100%);
+        background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        
+    }
+    
+    .recently__played__song__div > 
+    recently__played__song__head {
+        display:inline-block;
+        border-bottom:3px solid #FA8072;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .you_may_like__song__div{
+       /* background:#576f57;*/
+        height:80vmin;
+        width:100%;
+        min-height:380px;
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+        /*justify-content:center;*/
+        /*align-items:center;*/
+        -webkit-box-orient:vertical;
+        -webkit-box-direction:normal;
+            -ms-flex-direction:column;
+                flex-direction:column;
+        color:#000;
+        padding:0.9em;
+        
+    }
+    
+    
+    .you_may_like__song__div > .you_may_like__slider{
+        margin:4vmin;
+    }
+    .you_may_like__slider{
+    
+        width: 100%;
+        overflow-x: scroll;
+    }
+    
+    .you_may_like__slider::-webkit-scrollbar{
+        display: block;
+    }
+    
+    /*.horizantal_slider{
+        -ms-overflow-style: none;
+    }*/
+    
+    .you_may_like_slider_1{
+        display: block;
+        white-space: nowrap;
+        vertical-align:top;
+        
+    }
+    
+    
+    
+    .you_may_like_item{
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        margin-left: 10px;
+        margin-right: 10px;
+    
+        width: 60vmin;
+        height: 40vmin;
+        background-image: -o-linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+        background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+        -o-object-fit: cover;
+           object-fit: cover;
+        border-radius:20px;
+        /*padding:1em;*/
+       vertical-align: top;
+       -webkit-box-pack:center;
+           -ms-flex-pack:center;
+               justify-content:center;
+        -webkit-box-align:center;
+            -ms-flex-align:center;
+                align-items:center;
+    }
+    
+      
+    h4{
+        display:inline-block;
+        
+    }
+    
+    
+    .genre__div{
+       /* background:#000;*/
+        height:80vmin;
+        width:100%;
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+        -webkit-box-pack:center;
+            -ms-flex-pack:center;
+                justify-content:center;
+        /*align-items:center;*/
+        -webkit-box-orient:vertical;
+        -webkit-box-direction:normal;
+            -ms-flex-direction:column;
+                flex-direction:column;
+        color:#000;
+        padding:0.9em;
+        margin:2em;
+        min-height:380px;
+    }
+    
+    
+    .music__player__page__one > .genre__div {
+            margin:2vmin;
+    }
+    
+    .genre__div > .genre__head{
+        margin-left:20px;
+    }
+    
+    
+    .genre__div > .genre__slider{
+        margin:4vmin;
+    }
+    
+    .genre__slider{
+    
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y:hidden;
+    }
+    
+    .genre__slider::-webkit-scrollbar{
+        display: none;
+    }
+    
+    /*.horizantal_slider{
+        -ms-overflow-style: none;
+    }*/
+    
+    .genre_slider_1{
+        display: block;
+        white-space: nowrap;
+        
+    }
+    
+    .genre_item{
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        margin-left: 10px;
+        margin-right: 10px;
+    
+        width: 65vmin;
+        height: 40vmin;
+        vertical-align: top;
+       -webkit-box-pack:center;
+           -ms-flex-pack:center;
+               justify-content:center;
+        -webkit-box-align:center;
+            -ms-flex-align:center;
+                align-items:center;
+        background-image: -o-linear-gradient(330deg, #a1c4fd 0%, #c2e9fb 100%);
+        background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        -o-object-fit: cover;
+           object-fit: cover;
+        border-radius:20px;
+    }
+    
+    
+    
+    
+    
+    .artists_first__div{
+        background:transparent;
+        height:65vh;
+        width:100%;
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+        /*justify-content:center;*/
+        /*align-items:center;*/
+        -webkit-box-orient:vertical;
+        -webkit-box-direction:normal;
+            -ms-flex-direction:column;
+                flex-direction:column;
+        color:#000;
+        padding:2em;
+        margin:2em;
+        min-height:380px;
+    }
+    
+    .music__player__page__one > .artists_first__div {
+            margin:1vmin;
+    }
+    
+    .artists_first__div > .artist_first__slider{
+        margin:4vmin;
+    }
+    .artist_first__slider{
+    
+        width: 100%;
+        overflow-x: scroll;
+    }
+    
+    .artist_first__slider::-webkit-scrollbar{
+        display: none;
+    }
+    
+    /*.horizantal_slider{
+        -ms-overflow-style: none;
+    }*/
+    
+    .artist_first_slider_1{
+        display: block;
+        white-space: nowrap;
+        
+    }
+    
+    .artist_first_item{
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        margin-left: 10px;
+        margin-right: 10px;
+    
+        width: 30vmin;
+        height: 30vmin;
+        background-image: -o-linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+        background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+        -o-object-fit: cover;
+           object-fit: cover;
+        border-radius:50%;
+    }
+}{}
+
+#trend_head{
+    margin-top:0;
+}
+
+h1,h4{
+    color: white;
+    
+}
+.bottom_navigation_bar{
+    background: white ;
+}
+li{
+    color: #FF7F50;
+}
+
+
+.profile__card{
+    display: flex;
+    background:transparent;
+    border-radius:60px;
+    width:100%;
+    height:20vh;
+     justify-content:center;
+     flex-flow:column;
+     flex-direction:column;
+    align-items:center;
+    background:    #FF7F50;
+}
+
+
+i:hover{
+    color: #50F7FF;
+}
+    </style> 
+  <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+    sweetAlert("Ⓥⓔⓥⓔ","𝙼𝚞𝚜𝚒𝚌 𝚒𝚜 𝚝𝚑𝚎 𝚞𝚗𝚒𝚟𝚎𝚛𝚜𝚊𝚕 𝚕𝚊𝚗𝚐𝚞𝚊𝚐𝚎 𝚘𝚏 𝚖𝚊𝚗𝚔𝚒𝚗𝚍!\n𝙻𝚊 𝚖ú𝚜𝚒𝚌𝚊 𝚎𝚜 𝚎𝚕 𝚕𝚎𝚗𝚐𝚞𝚊𝚓𝚎 𝚞𝚗𝚒𝚟𝚎𝚛𝚜𝚊𝚕 𝚍𝚎 𝚕𝚊 𝚑𝚞𝚖𝚊𝚗𝚒𝚍𝚊𝚍!","success");
+});
+
+
+
+setTimeout(() => {
+
+document.querySelector('#loading-1').style.display = 'none';
+document.querySelector('body').setAttribute('style','overflow: scroll;');
+
+}, 8008.99999);
+
+
+
+
+function home(){
+        document.querySelector(".profile__page").style.display="none"; 
+
+document.querySelector(".trending__page").style.display="none"; 
+ document.querySelector(".music__player__page__one").style.display="flex";
+ 
+window.scrollTo(0, 0);
+ 
+}
+
+
+function trending(){
+   document.querySelector(".profile__page").style.display="none"; 
+
+document.querySelector(".trending__page").style.display="flex"; 
+ document.querySelector(".music__player__page__one").style.display="none";
+   
+window.scrollTo(0, 0);
+ 
+}
+
+
+
+function profile(){
+   document.querySelector(".profile__page").style.display="flex"; 
+
+document.querySelector(".trending__page").style.display="none";  document.querySelector(".music__player__page__one").style.display="none";
+ 
+window.scrollTo(0, 0);
+ 
+}
+
+
+function tabs(tabsc) {
+    var i;
+    var tabs = document.getElementsByClassName("tabsc");
+    for (i = 0; i < tabs.length; i++) {
+       tabs[i].style.display = "none";  
+    }
+    document.getElementById(tabsc).style.display = "flex";  
+}
+
+
+
+window.onload = ()=>{
+  document.querySelector("#loader").style.display="none";
+
+document.querySelector("body").style.overflow="scroll";
+ /*document.querySelector(".xD").style.display="flex";*/
+ document.querySelector(".bottom_navigation_bar").style.display="flex";
+ 
+ var song_data = [
+   {
+       
+       song:"Havana",
+       artist:"Camila Cabello ", 
+       id:"1", music_link:"https://dl.dropbox.com/s/mrgs9i0w7q7j7ia/Camila_Cabello_-_Havana_%28Lyrics%29_ft_Young_Thug%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/1RMtFbZ/artworks-000271134083-v6issz-t500x500.jpg"
+   },
+   {
+       song:"Safari",
+       artist:"Serena", 
+       id:"2", 
+       music_link:"https://dl.dropbox.com/s/3wza2s8zw6y33qh/Serena_-_Safari_%28Lyrics%29%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/0FPjFZZ/Screenshot-2022-0417-203921.png"
+   },
+   
+   {
+       song:"Let Me Love You",
+       artist:"DJ Snake feat Justin bieber", 
+       id:"3", 
+    music_link:"https://www.dropbox.com/s/pngtrll7ctzdtm4/y2mate.com%20-%20DJ%20Snake%20ft%20Justin%20Bieber%20%20Let%20Me%20Love%20You%20Lyric%20Video.mp3?raw=1", thumbnail:"https://i.ibb.co/N2qV8y8/DJSnake-Let-Me-Love-You-1.jpg"
+   },
+   {
+       song:"On my way",
+       artist:"Alan Walker, Sabrina Carpenter & Farruko", 
+       id:"4", 
+    music_link:"https://www.dropbox.com/s/4e5cnbq45lk9avm/y2mate.com%20-%20On%20my%20way%20%20Best%20ever%20whatsapp%20status%20Alan%20Walker.mp3?raw=1", thumbnail:"https://i.ibb.co/1qCTCN0/artworks-000523641915-lo2qzf-t500x500.jpg"
+   },
+   
+     
+   {
+       song:"Rewrite The Stars",
+       artist:"Anne Marie & James Arthur", 
+       id:"5",
+        music_link:"https://dl.dropbox.com/s/tc77e5q9t1xm0q8/Anne-Marie___James_Arthur_-_Rewrite_The_Stars_%255Bfrom_The_Greatest_Showman__Reimagined%255D%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/dt7JwQq/artworks-000534318996-nfls38-t500x500.jpg"
+       
+       
+   },
+   
+    {
+       song:" Pretty_Girl",
+       artist:"Maggie Lindemann", 
+       id:"6",
+        music_link:"https://dl.dropbox.com/s/odmt3yr74gg514q/Maggie_Lindemann_-_Pretty_Girl_%28Cheat_Codes_x_CADE_Remix%29_%5BOfficial_Video%5D.mp3?dl=0", thumbnail:"https://i.ibb.co/3dPQxqT/artworks-OCxw-CUv-M75z1s-Mf-J-CRSq-Yw-t500x500.jpg"
+   },
+  
+ {
+       song:"You are the reason",
+       artist:"Calum Scott", 
+       id:"7",
+        music_link:"https://dl.dropbox.com/s/j5rbzykgjg2o0yr/Calum_Scott_-_You_Are_The_Reason_%28Official%29%28360p%29.mp3?dl=0",
+ thumbnail:"https://i.ibb.co/3ptnXx5/412rf-Pg0-Yz-L-SY580.jpg"
+       
+       
+   },
+   
+ {
+       song:"Hawái",
+       artist:"Maluma", 
+       id:"8",
+        music_link:"https://dl.dropbox.com/s/vesqwmfauvzu2e2/Maluma_-_Haw%C3%A1i_%28Official_Video%29%28720p%29.m4a?dl=0R.mp3?raw=1", thumbnail:"https://i.ibb.co/N39VxRv/artworks-8z-EP1-Os-DXPy-B1c0-L-z-Hzw5g-t500x500.jpg"
+       
+       
+   },
+
+ {
+       song:"Sobrio",
+       artist:"Maluma", 
+       id:"9",
+  music_link:"https://dl.dropbox.com/s/pe1kdiw8976y0t9/Maluma_-_Sobrio_%28Official_Video%29%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/HTgwmqP/artworks-Pi-Vbb-IMJ15erlnl6-0-SG3lg-t500x500.jpg"
+       
+       
+   },
+   
+ {
+       song:"ADMV",
+       artist:"Maluma", 
+       id:"10",
+ music_link:"https://dl.dropbox.com/s/k92vll6s5zr2nj3/Maluma_-_ADMV_%28Versi%C3%B3n_Urbana_-_Official_Video%29%28720p%29.m4a?dl=0", thumbnail:"https://i.ibb.co/Rc6hKjm/61-CAdt-O-7-UL-SS500.jpg"
+       
+           
+   },
+   
+ {
+       song:"Instinto Natural",
+       artist:"Maluma", 
+       id:"11",
+        music_link:"https://dl.dropbox.com/s/kxhhcq3hvur86oj/Maluma_-_Instinto_Natural_%28Official_Video%29_ft._Sech%28480p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/yYwLsZQ/artworks-000586124024-cpkiil-t500x500.jpg"
+       
+       
+   },
+   
+   
+ {
+       song:"Hola Señorita",
+       artist:"Maluma", 
+       id:"12",
+        music_link:"https://dl.dropbox.com/s/8ky7be9ru9ccb7t/GIMS%2C_Maluma_-_Hola_Se%C3%B1orita_%28Maria%29_%5BOfficial_Video%5D%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/fSNsvGs/artworks-000536893491-9agu86-t500x500.jpg"
+       
+       
+   },
+   
+ {
+       song:"La Cintura",
+       artist:"Alvaro Soler", 
+       id:"13",
+        music_link:"https://dl.dropbox.com/s/47ecodjq0vlss1j/Alvaro_Soler_-_La_Cintura_%5BRemix%5D_ft._Flo_Rida%2C_TINI%28480p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/hdZQMMT/artworks-000361096554-xr1715-t500x500.jpg"
+       
+       
+   },
+   
+ {
+       song:"La Libertad",
+       artist:"Alvaro Soler", 
+       id:"14",
+        music_link:"https://dl.dropbox.com/s/gxubt1gwf7vv1yk/Alvaro_Soler_-_La_Libertad_%28Official_Music_Video%29%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/wQvZk2h/D5a6p6c-W4-AE5pl-W.jpg"
+       
+       
+   },
+   
+  {
+       song:"Loca",
+       artist:"Alvaro Soler", 
+       id:"15",
+        music_link:"https://dl.dropbox.com/s/2es36cagsmm5dbt/Alvaro_Soler_-_Loca_%28Official_Music_Video%29%281080p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/MfHppHW/ab67706c0000bebbe1d23ec7055af78744383bb3.jpg"
+       
+       
+   },
+   
+  {
+       song:"Si Te Vas",
+       artist:"Alvaro Soler", 
+       id:"16",
+        music_link:"https://dl.dropbox.com/s/t7zs4kmjh8so9va/Alvaro_Soler_-_Si_Te_Vas_%28Lyric_Video%29%28480p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/xFLQZjt/ab67616d0000b2735767e044062c6d03256397e5.jpg"
+       
+       
+   },
+   
+ 
+  {
+       song:"Sofia",
+       artist:"Alvaro Soler", 
+       id:"17",
+        music_link:"https://dl.dropbox.com/s/wi8t9wq7brcrxw2/Alvaro_Soler_-_Sofia_%28Official_Music_Video%29%28480p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/c8BVvsq/51-I-k-Sr5l-OL-SY580.jpg"
+       
+       
+   },
+   
+      
+  {
+       song:"Tiago",
+       artist:"Kendji Girac", 
+       id:"18",
+        music_link:"https://dl.dropbox.com/s/3rc6uwc2rdlx7ss/Kendji_Girac_-_Tiago%281080p%29.mp3?dl=0w=1", thumbnail:"https://i.ibb.co/s2GgTLP/ab67616d0000b273e45a68b38740676ea34012a3.jpg"
+       
+       
+   },
+   
+ 
+      
+   {
+       song:"Ma câlina",
+       artist:"Kendji Girac", 
+       id:"19",
+        music_link:"https://dl.dropbox.com/s/b3zyj9bxkbi57e9/Kendji_Girac_-_Ma_c%C3%A2lina%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/zxnCxVq/ab67616d0000b2733374410cef6e22f688de9c52.jpg"
+       
+       
+   },
+   
+   {
+       song:"Conmigo",
+       artist:"Kendji Girac", 
+       id:"20",
+        music_link:"https://dl.dropbox.com/s/whgorb66cayals5/Kendji_Girac_-_Conmigo_%28Clip_Officiel%29%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/bR9zbkS/ab67616d0000b2734dfc91ff1919db0c0153d9df.jpg"
+       
+       
+   },
+   
+  {
+       song:"Pour oublier",
+       artist:"Kendji Girac", 
+       id:"21",
+        music_link:"https://dl.dropbox.com/s/vrp9jlr5sf1w4mf/Kendji_Girac_-_Pour_oublier%28720p%29.mp3?dl=0er%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/vz9FSM9/ab67616d0000b27395458dd1c58fa42bcff60e1b.jpg"
+       
+       
+   },
+   
+  {
+       song:"Que Dieu me pardonne",
+       artist:"Kendji Girac", 
+       id:"22",
+        music_link:"https://dl.dropbox.com/s/5f4byqx53m2uh21/Kendji_Girac%2C_Claudio_Capeo_-_Que_Dieu_me_pardonne%28720p%29.m4a?dl=0", thumbnail:"https://i.ibb.co/xFh59Cq/d84070b9.jpg"
+       
+       
+   },
+   
+ 
+  {
+       song:"Tutu",
+       artist:"Camilo, Pedro Capó", 
+       id:"23",
+        music_link:"https://dl.dropbox.com/s/2hp0gqte9c2ycf5/Camilo%2C_Pedro_Cap%C3%B3_-_Tutu_%28Official_Video%29%281080p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/LhtNCRN/IMG-20220418-053554.jpg"
+       
+       
+   },
+   
+      
+  {
+       song:"BEBÊ",
+       artist:"Camilo", 
+       id:"24",
+        music_link:"https://dl.dropbox.com/s/2d5aovx4j7u2iac/Camilo%2C_Gusttavo_Lima_-_BEB%C3%8A_%28Official_Video%29%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/1Jjw8S4/gusttavo-lima-camilo.jpg"
+       
+       
+   },
+   
+ 
+      
+   {
+       song:"Vida de Rico",
+       artist:"Camilo", 
+       id:"25",
+        music_link:"https://dl.dropbox.com/s/mjd5f1bmete0hvh/Camilo_-_Vida_de_Rico_%28Official_Video%29%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/H2hGbkt/artworks-kjy-WF1zgc-MGPy-Mjp-y-Kit-QQ-t500x500.jpg"
+       
+       
+   },
+   
+   
+   {
+       song:"Millones",
+       artist:"Camilo", 
+       id:"26",
+        music_link:"https://dl.dropbox.com/s/gfvel9xbkf38tat/Camilo_-_Millones_%28Official_Video%29%281080p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/tbFddvL/ab67616d0000b273d7210e8d6986196b28d084ef.jpg"
+       
+       
+   },
+   
+  {
+       song:"El MismobAire",
+       artist:"Camilo, Pablo Alborán", 
+       id:"27",
+        music_link:"https://dl.dropbox.com/s/vzj8dnk5ga6ok6c/Camilo%2C_Pablo_Albor%C3%A1n_-_El_Mismo_Aire_%28Official_Video%29%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/NjZTRHp/artworks-q-ODR2-Vp-Oy-FDHBhg-T-77-YWhw-t500x500.jpg"
+       
+       
+   },
+   
+  {
+       song:"Ti",
+       artist:"Bloody", 
+       id:"28",
+        music_link:"https://dl.dropbox.com/s/67b760n0gv0fmge/Bloody_-_Ti_%28Official_Video_4K%29%281080p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/BLzbHJ0/400x400cc.jpg"
+       
+       
+   },
+   
+ 
+  {
+       song:"Takeaway",
+       artist:"The Chainsmokers", 
+       id:"29",
+        music_link:"https://dl.dropbox.com/s/6o1ghm8v6r8gaei/The_Chainsmokers__ILLENIUM_-_Takeaway_%28Official_Video%29_ft._Lennon_Stella%281080P_HD%29_1.mp3?dl=0", thumbnail:"https://i.ibb.co/xLd9wJY/artworks-000577845122-nyqplm-t500x500.jpg"
+       
+       
+   },
+   
+      
+  {
+       song:"High",
+       artist:"The Chainsmokers", 
+       id:"30",
+        music_link:"https://dl.dropbox.com/s/s2fh49tg4mff149/The_Chainsmokers_-_High_%28Official_Video%29%28480p%29.mp3?dl=0w=1", thumbnail:"https://i.ibb.co/xX35M3X/artworks-X5f-OYJJ9-H7l0-OQOE-iu-NGgw-t500x500.jpg"
+       
+       
+   },
+   
+ 
+      
+   {
+       song:" Without me",
+       artist:"Hasley", 
+       id:"31",
+        music_link:"https://dl.dropbox.com/s/64hzksuuzz3uzkk/Halsey_-_Without_Me_%28Lyrics%29%28720p%29.m4a?dl=0", thumbnail:"https://i.ibb.co/6PkHcLj/artworks-000515969529-barar5-t500x500.jpg"
+       
+       
+   },
+   
+   
+   
+   
+   {
+     
+   song:"Friends",
+       artist:"Marshmello & Anne Marie", 
+       id:"32", 
+    music_link:"https://www.dropbox.com/s/mtc6ki2f71jx28w/y2mate.com%20-%20Marshmello%20%20AnneMarie%20%20FRIENDS%20Lyrics.mp3?raw=1", thumbnail:"https://i.ibb.co/YNkWDjB/artworks-000359430471-6jd8ty-t500x500.jpg"
+   },
+   
+  {
+       song:"Let me Down Slowly",
+       artist:"Alec Benjamin", 
+       id:"33", 
+       music_link:"https://www.dropbox.com/s/gfwbjjwpqbk8cq0/y2mate.com%20-%20Alec%20Benjamin%20%20Let%20Me%20Down%20Slowly%20Lyrics.mp3?raw=1", thumbnail:"https://i.ibb.co/XsTRjWs/maxresdefault.jpg"
+   },
+   
+  {
+       song:" Biblical",
+       artist:"Calum Scott", 
+       id:"34",
+        music_link:"https://dl.dropbox.com/s/qttshv96u7b3meo/Calum_Scott_-_Biblical_%28Official_Music_Video%29%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/LCdPJnt/calum-scott-biblical-lyrics-1.jpg"
+       
+       
+   },
+   
+ 
+  {
+       song:"Pepas",
+       artist:"Farruko", 
+       id:"35",
+        music_link:"https://dl.dropbox.com/s/clt11y124wytjee/Farruko_-_Pepas__Lyrics_Letra_%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/hW9XTn9/Screenshot-2022-0417-195614.png"
+       
+       
+   },
+   
+      
+  {
+       song:"Salt",
+       artist:"Ava Max", 
+       id:"36",
+        music_link:"https://dl.dropbox.com/s/n2of1thn2mtpoao/Ava%20Max%20-%20Salt%20%28Lyrics%29.m4a?dl=0", thumbnail:"https://i.ibb.co/Jtt6BXW/artworks-5o8q9f-FYS8-PYauzl-Cy-KBJA-t500x500.jpg"
+       
+       
+   },
+   
+ 
+      
+   {
+       song:"Infinity",
+       artist:"Jaymes Young ", 
+       id:"37",
+ music_link:" https://dl.dropbox.com/s/jd0ttj4zx239pl3/Jaymes_Young_-_Infinity_%28Lyrics%29%28720p%29.mp3?dl=0", thumbnail:"https://i.ibb.co/DMM72cg/jaymes-young-infinity-lyrics-1.jpg"
+       
+       
+   }
+   
+   
+   
+   
+   
+   
+  
+   ]
+    
+
+   document.querySelectorAll(".song").forEach((div)=>{
+        div.onclick = function (){
+            var presentSong = this.getAttribute("data-no");
+        createPlayer(presentSong); 
+        let previousSong =document.querySelector('#prev_song'); ;
+        let nextSong = document.querySelector('#next_song');
+   
+     
+      nextSong.addEventListener("click",()=>{
+      if((presentSong+1) <= song_data.length){
+      songChange(song_data , ++presentSong)
+      
+      }
+      else{
+          alert("𝚂𝚘𝚖𝚎𝚝𝚑𝚒𝚗𝚐 𝚒𝚜 𝚠𝚛𝚘𝚗𝚐!");
+      }
+      });
+       previousSong.addEventListener("click",()=>{
+       if((presentSong-1) >= 0){
+     songChange(song_data , --presentSong)
+     
+      }
+      else{
+          alert("𝚂𝚘𝚖𝚎𝚝𝚑𝚒𝚗𝚐 𝚒𝚜 𝚠𝚛𝚘𝚗𝚐!");
+          }; 
+        })
+    }
+})
+function createPlayer(i){
+ var card = document.createElement("DIV");
+            card.className = 'music__page';
+            card.innerHTML = `
+           
+            <div class="upper__part">
+                <div class="music__card">
+                    <img src=${song_data[i].thumbnail} class="music_thumbnail">
+            
+                </div>
+                <div class="credentials">
+                <h6 class="music_name">
+                ${song_data[i].song}
+                </h6>
+                <p>${song_data[i].artist}</p>
+                </div>
+             <div class="back_from_music_page"
+             onclick="back()">
+            <i class="ri-arrow-left-line"></i>
+            </div>
+            <div class="menu_in_music_page" onclick="f()">
+            <i class="ri-menu-2-fill"></i>
+            </div>
+            </div>
+            
+            <div class="down_part">
+           
+                <div class="play_and_all">
+  <span id="prev_song">
+        <i class="ri-skip-back-fill"></i>
+                </span>
+                <span id="song_play" onclick = "play_song()">
+           <i id="play_toggle" class="ri-play-fill"></i>
+           </span>
+    <span id="next_song" >
+           <i class="ri-skip-forward-fill"></i>
+           </span>
+                </div>
+                
+                <br />
+                
+                 
+    
+                <div class="down_part_icons" >
+             
+                 <i class="ri-repeat-line"onclick="f()"></i>
+             
+           
+              <i class="ri-heart-3-line"onclick="h()"></i>
+                   <i class="ri-volume-up-fill" onclick="f()"></i>
+          
+              <i class="ri-share-fill"onclick="s()"></i>
+              
+           
+                </div>
+     <audio src=${song_data[i].music_link} class="gaana"></audio>
+            </div>
+            
+            `;
+document.querySelector(".xD").classList.toggle("hide");
+
+
+
+document.body.appendChild(card);
+    }
+    }
+function songChange(song_data ,i){
+    let thumbnail = document.querySelector('.music_thumbnail');
+    let artist = document.querySelector('.credentials > p');
+    let title =     document.querySelector('.music_name');
+    let playbtn = document.querySelector("#play_toggle")
+    let song = document.querySelector(".gaana");
+    thumbnail.src = song_data[i].thumbnail;
+    artist.innerText = song_data[i].artist;
+    title.innerText = song_data[i].song;
+    song.src = song_data[i].music_link;
+    
+    if(playbtn.className == "ri-pause-fill"){
+        playbtn.className = "ri-play-fill";
+    }
+}
+function back (){
+            document.querySelector(".xD").classList.toggle("hide");
+if(document.querySelector(".music__page")){
+document.body.removeChild(document.querySelector(".music__page"))
+}
+}
+
+
+
+function play_song(){
+    document.querySelector("#song_play").setAttribute("onClick", "pause()");
+
+var a = document.querySelector(".gaana") ;
+
+    var playbtn = document.querySelector('#song_play');
+  playbtn.innerHTML='<i id="play_toggle" class="ri-play-line"></i>';
+
+var playbtn = document.querySelector('#song_play');
+  playbtn.innerHTML=' <i id="play_toggle" class="ri-pause-fill"></i>';
+a.play()
+
+}
+
+
+function pause(){
+    document.querySelector("#song_play").setAttribute("onClick", "play_song()");
+
+var a = document.querySelector(".gaana") ;
+var playbtn = document.querySelector('#song_play');
+  playbtn.innerHTML=' <i class="ri-play-fill"></i>';
+  
+ a.pause()
+
+}
+
+function f(){
+    swal({
+  title:"",
+  text: "𝚃𝚑𝚒𝚜 𝚒𝚝𝚎𝚖 𝚒𝚜𝚗'𝚝 𝚊𝚟𝚊𝚒𝚕𝚊𝚋𝚕𝚎!",
+  timer: 3500
+});
+}
+
+
+
+function h(){
+    swal({
+  title:"𝙻𝚒𝚔𝚎𝚍!",
+  text: "",
+  timer: 2500
+});
+}
+
+
+function a(){
+    swal({
+  title:"",
+  text: "𝚃𝚑𝚒𝚜 𝚒𝚝𝚎𝚖 𝚒𝚜𝚗'𝚝 𝚊𝚟𝚊𝚒𝚕𝚊𝚋𝚕𝚎!",
+  timer: 3500
+});
+}
+
+
+
+function s(){
+    swal({
+  title:"𝚂𝚑𝚊𝚛𝚎𝚍!",
+  text: "",
+  timer: 2500
+});
+}
+
+
+   function v() { 
+    navigator.vibrate([48]);
+}     
+
+    </script> 
+ </head> 
+ <body onclick="v()"> 
+  <div id="loader"> 
+   <div id="loding_text"></div> 
+  </div> 
+  <div id="loading-1"> 
+   <div id="loading-2"> 
+    <img class="logo" src="https://i.ibb.co/P5j02BN/2c447fe3aee60b59e1305e794d0e3460.gif" alt="e706fb50517b1d98d5058337ae3ef70b" border="0"> 
+   </div> 
+  </div> 
+  <div class="xD"> 
+   <div class="music__player__page__one" id="page_1"> 
+    <div class="featured__song__div"> 
+     <div class="slide"> 
+      <img id="slider" src="https://i.ibb.co/vz9FSM9/ab67616d0000b27395458dd1c58fa42bcff60e1b.jpg"> 
+     </div> 
+     <style>
+         
+#slider{
+    position:absolute;
+    width:100%;
+      height:50%;
+    text-align:center;
+    transition:0.8s
+    background:teal;
+    
+   }
+
+
+
+  
+
+        </style> 
+     <script>
+          
+          
+           
+           setInterval(function(){
+             let image=["https://i.ibb.co/N39VxRv/artworks-8z-EP1-Os-DXPy-B1c0-L-z-Hzw5g-t500x500.jpg","https://i.ibb.co/xFLQZjt/ab67616d0000b2735767e044062c6d03256397e5.jpg" , "https://i.ibb.co/vz9FSM9/ab67616d0000b27395458dd1c58fa42bcff60e1b.jpg", "https://i.ibb.co/LCdPJnt/calum-scott-biblical-lyrics-1.jpg", "https://i.ibb.co/zxnCxVq/ab67616d0000b2733374410cef6e22f688de9c52.jpg",
+             "https://i.ibb.co/hdZQMMT/artworks-000361096554-xr1715-t500x500.jpg", "https://i.ibb.co/LhtNCRN/IMG-20220418-053554.jpg"];
+            
+            const random=Math.floor(Math.random()*7);
+            
+               slider.src=image[random];
+           }, 4000)
+           
+        </script> 
+    </div> 
+    <br> 
+    <h1>Ｖｅｖｅ <br> Ｍｕｓｉｃ</h1> 
+    <br> 
+    <div class="recently__played__song__div" data-aos="zoom-in"> 
+     <div class="recently__played__song__head"> 
+      <h4>Popular</h4> 
+     </div> 
+     <div class="recently__played__slider"> 
+      <div class="recently__played__container_slider_1"> 
+       <div class="recently_played_item song" data-no="0"> 
+        <img src="https://i.ibb.co/1RMtFbZ/artworks-000271134083-v6issz-t500x500.jpg" class="image"> 
+       </div> 
+       <div class="recently_played_item song" data-no="1"> 
+        <img src="https://i.ibb.co/0FPjFZZ/Screenshot-2022-0417-203921.png" class="image"> 
+       </div> 
+       <div class="recently_played_item song" data-no="2"> 
+        <img src="https://i.ibb.co/N2qV8y8/DJSnake-Let-Me-Love-You-1.jpg" class="image"> 
+       </div> 
+       <div class="recently_played_item song" data-no="3"> 
+        <img src="https://i.ibb.co/1qCTCN0/artworks-000523641915-lo2qzf-t500x500.jpg" class="image"> 
+       </div> 
+       <div class="recently_played_item song" data-no="4"> 
+        <img src="https://i.ibb.co/dt7JwQq/artworks-000534318996-nfls38-t500x500.jpg" class="image"> 
+       </div> 
+       <div class="recently_played_item song" data-no="5"> 
+        <img src="https://i.ibb.co/3dPQxqT/artworks-OCxw-CUv-M75z1s-Mf-J-CRSq-Yw-t500x500.jpg" class="image"> 
+       </div> 
+       <div class="recently_played_item song" data-no="6"> 
+        <img src="https://i.ibb.co/3ptnXx5/412rf-Pg0-Yz-L-SY580.jpg" class="image"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <script>
+     AOS.init({
+    offset:200,
+    duration:1000,
+    delayv:200
+});
+</script> 
+    <div class="you_may_like__song__div" data-aos="zoom-in"> 
+     <div class="you_may_like__song__head"> 
+      <h4>Maluma </h4> 
+     </div> 
+     <div class="you_may_like__slider"> 
+      <div class="you_may_like_slider_1"> 
+       <div class="you_may_like_item song" data-no="7"> 
+        <img src="https://i.ibb.co/N39VxRv/artworks-8z-EP1-Os-DXPy-B1c0-L-z-Hzw5g-t500x500.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="8"> 
+        <img src="https://i.ibb.co/HTgwmqP/artworks-Pi-Vbb-IMJ15erlnl6-0-SG3lg-t500x500.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="9"> 
+        <img src="https://i.ibb.co/Rc6hKjm/61-CAdt-O-7-UL-SS500.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="10"> 
+        <img src="https://i.ibb.co/yYwLsZQ/artworks-000586124024-cpkiil-t500x500.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="11"> 
+        <img src="https://i.ibb.co/fSNsvGs/artworks-000536893491-9agu86-t500x500.jpg" class="image"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <br> 
+    <br> 
+    <div class="you_may_like__song__div" data-aos="zoom-in"> 
+     <div class="you_may_like__song__head"> 
+      <h4>Alvaro Soler </h4> 
+     </div> 
+     <div class="you_may_like__slider"> 
+      <div class="you_may_like_slider_1"> 
+       <div class="you_may_like_item song" data-no="12"> 
+        <img src="https://i.ibb.co/hdZQMMT/artworks-000361096554-xr1715-t500x500.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="13"> 
+        <img src="https://i.ibb.co/wQvZk2h/D5a6p6c-W4-AE5pl-W.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="14"> 
+        <img src="https://i.ibb.co/MfHppHW/ab67706c0000bebbe1d23ec7055af78744383bb3.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="15"> 
+        <img src="https://i.ibb.co/xFLQZjt/ab67616d0000b2735767e044062c6d03256397e5.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="16"> 
+        <img src="https://i.ibb.co/c8BVvsq/51-I-k-Sr5l-OL-SY580.jpg" class="image"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="you_may_like__song__div" data-aos="zoom-in"> 
+     <div class="you_may_like__song__head"> 
+      <h4>Kendji Girac</h4> 
+     </div> 
+     <div class="you_may_like__slider"> 
+      <div class="you_may_like_slider_1"> 
+       <div class="you_may_like_item song" data-no="17"> 
+        <img src="https://i.ibb.co/s2GgTLP/ab67616d0000b273e45a68b38740676ea34012a3.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="18"> 
+        <img src="https://i.ibb.co/zxnCxVq/ab67616d0000b2733374410cef6e22f688de9c52.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="19"> 
+        <img src="https://i.ibb.co/bR9zbkS/ab67616d0000b2734dfc91ff1919db0c0153d9df.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="20"> 
+        <img src="https://i.ibb.co/vz9FSM9/ab67616d0000b27395458dd1c58fa42bcff60e1b.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="21"> 
+        <img src="https://i.ibb.co/xFh59Cq/d84070b9.jpg" class="image"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="you_may_like__song__div" data-aos="zoom-in"> 
+     <div class="you_may_like__song__head"> 
+      <h4>Camilo </h4> 
+     </div> 
+     <div class="you_may_like__slider"> 
+      <div class="you_may_like_slider_1"> 
+       <div class="you_may_like_item song" data-no="22"> 
+        <img src="https://i.ibb.co/LhtNCRN/IMG-20220418-053554.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="23"> 
+        <img src="https://i.ibb.co/1Jjw8S4/gusttavo-lima-camilo.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="24"> 
+        <img src="https://i.ibb.co/H2hGbkt/artworks-kjy-WF1zgc-MGPy-Mjp-y-Kit-QQ-t500x500.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="25"> 
+        <img src="https://i.ibb.co/tbFddvL/ab67616d0000b273d7210e8d6986196b28d084ef.jpg" class="image"> 
+       </div> 
+       <div class="you_may_like_item song" data-no="26"> 
+        <img src="https://i.ibb.co/NjZTRHp/artworks-q-ODR2-Vp-Oy-FDHBhg-T-77-YWhw-t500x500.jpg" class="image"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="artists_first__div" data-aos="zoom-in"> 
+     <div class="artists_first__head"> 
+      <h4>Singers </h4> 
+     </div> 
+     <div class="artist_first__slider"> 
+      <div class="artist_first_slider_1" onclick="a()"> 
+       <div class="artist_first_item"> 
+        <img src="https://i.ibb.co/1qBjrr3/IMG-20220418-105652.jpg" class="image_artist"> 
+       </div> 
+       <div class="artist_first_item"> 
+        <img src="https://i.ibb.co/z5dbkNd/fabe66e4b550821c2eaff65e5088b79b.jpg" class="image_artist"> 
+       </div> 
+       <div class="artist_first_item"> 
+        <img src="https://i.ibb.co/CwNFcdb/6f86b3e3d7a99d1f65a8495f038c0c52.jpg" class="image_artist"> 
+       </div> 
+       <div class="artist_first_item"> 
+        <img src="https://i.ibb.co/J5wgvxf/4d2f51ce9d5717b2f33a0fbee3fc0fec.jpg" class="image_artist"> 
+       </div> 
+       <div class="artist_first_item"> 
+        <img src="https://i.ibb.co/qFqVDhj/ab67706c0000bebbe348615b7c6d0230922c7deb.jpg" class="image_artist"> 
+       </div> 
+       <div class="artist_first_item"> 
+        <img src="https://i.ibb.co/B3cnRTY/0c1bbf78240f7357859b756e0ed3023a.jpg" class="image_artist"> 
+       </div> 
+       <div class="artist_first_item"> 
+        <img src="https://i.ibb.co/MSjKDkH/cfa670a622d5ca85a888111eebffe853.jpg" class="image_artist"> 
+       </div> 
+       <div class="artist_first_item"> 
+        <img src="https://i.ibb.co/hYjw01D/Screenshot-2022-0417-214153.png" class="image_artist"> 
+       </div> 
+       <div class="artist_first_item"> 
+        <img src="https://i.ibb.co/9c8zKPk/e1acb4d9eb1e3800fe370aae176286bc.jpg" alt="e1acb4d9eb1e3800fe370aae176286bc" class="image_artist"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="trending__page" data-aos="zoom-in"> 
+    <div class="trending_heading"> 
+     <h2 id="trend_head">Trending</h2> 
+    </div> 
+    <div class="left__side"> 
+     <div class="left_trending_item song" id="left_trending_item_one" data-no="27"> 
+     </div> 
+     <br> 
+     <div class="left_trending_item song" id="left_trending_item_two" data-no="28"> 
+     </div> 
+     <br> 
+     <div class="left_trending_item song" id="left_trending_item_three" data-no="29"> 
+     </div> 
+     <br> 
+     <div class="left_trending_item song" id="left_trending_item_four" data-no="30"> 
+     </div> 
+     <br> 
+     <div class="left_trending_item song" id="left_trending_item_five" data-no="31"> 
+     </div> 
+    </div> 
+    <br> 
+    <div class="right__side"> 
+     <div class="right_trending_item song" id="right_trending_item_one" data-no="32"> 
+     </div> 
+     <br> 
+     <br> 
+     <div class="right_trending_item song" id="right_trending_item_two" data-no="33"> 
+     </div> 
+     <br> 
+     <div class="right_trending_item song" id="right_trending_item_three" data-no="34"> 
+     </div> 
+     <br> 
+     <div class="right_trending_item song" id="right_trending_item_four" data-no="35"> 
+     </div> 
+     <br> 
+     <div class="right_trending_item song" id="right_trending_item_five" data-no="36"> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="profile__page" data-aos="zoom-in"> 
+    <div class="profile__page__head pg"> 
+     <h2>My Profile</h2> 
+    </div> 
+    <div class="profile__info pg pc"> 
+     <div class="profile__image"> 
+      <img src="https://api.sololearn.com/Uploads/Avatars/25547755.jpg" class="profile__pic"> 
+     </div> 
+     <div class="profile__card pc" data-aos="zoom-in"> 
+      <h4>Name : Tunar</h4> 
+      <h4>Job : bekar</h4> 
+      <h4>Live in : Baku, Lokbatan</h4> 
+     </div> 
+     <div class="socials__profile"> <span onclick="f()" id="open_git"> <i class="ri-instagram-fill"></i> <i class="ri-spotify-fill"></i> <i class="ri-soundcloud-fill"></i> </span> 
+     </div> 
+     <p id="copyright">Copyright © 2022-2030</p> 
+     <style>
+         
+         #copyright{
+     font-family:'Raleway','sans-serif' ;
+    font-weight: 400;
+    line-height: 1.7;
+    align:center ;
+    color:white;
+    text-align:center ;
+     padding:1.7rem;
+     text-transform: capitalize;
+     font-size: 0.7rem;
+     letter-spacing: 2px;
+     opacity: 0.5;
+    
+}
+
+
+     </style> 
+     <br> 
+    </div> 
+   </div> 
+   <div class="bottom_navigation_bar"> 
+    <nav> 
+     <ul> 
+      <li> 
+       <div onclick="trending()"> <i class="ri-fire-fill" style="font-size:1.4rem;"></i> 
+       </div></li> 
+      <li> 
+       <div onclick="home()"> <i class="ri-home-2-fill" style="font-size:1.4rem;"></i> 
+       </div></li> 
+      <li> 
+       <div onclick="profile()"> <i class="ri-user-fill" style="font-size:1.4rem;"></i> 
+       </div></li> 
+     </ul> 
+    </nav> 
+   </div> 
+  </div> 
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"> 
+  <script src="script.js"></script> 
+ 
+</body></html>
